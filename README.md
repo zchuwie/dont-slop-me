@@ -147,11 +147,12 @@ This repository conforms strictly to the `agentskills.io` open standard:
 
 ## Versioning
 
-`dontslopme` uses major-only version numbers (`1`, `2`, ...) during its initial development:
+`dontslopme` uses minor-focused SemVer (`0.1.0`, `0.2.0`, ...) during pre-1.0 development:
 
-- **Root `VERSION` file:** Contains the active single-integer major version (`1`).
-- **YAML Frontmatter:** Each `SKILL.md` specifies its major version (`version: 1`).
-- **Git Tags:** Releases are tagged as `v1`, `v2`, and so on.
+- **Pre-1.0 Minor Focus:** Structural iterations, rule updates, and reference additions increment the minor version (`0.1.0` -> `0.2.0`). Patch increments (`0.1.1`) are reserved for typographical or formatting fixes.
+- **Root `VERSION` file:** Contains the active version string (`0.1.0`).
+- **YAML Frontmatter:** Each `SKILL.md` specifies `version: 0.1.0`.
+- **Git Tags:** Releases are tagged as `v0.1.0`, `v0.2.0`, and so on.
 
 ## License
 
