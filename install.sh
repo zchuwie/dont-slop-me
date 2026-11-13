@@ -151,3 +151,4 @@ done
 echo ""
 echo "dontslopme installed successfully in $MODE mode."
 echo "Active skills: dontslopme, dontslopme-ui"
+

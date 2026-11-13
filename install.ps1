@@ -150,3 +150,4 @@ foreach ($d in $targetDests) {
 Write-Host ""
 Write-Host "dontslopme installed successfully in $Mode mode." -ForegroundColor Green
 Write-Host "Active skills: dontslopme, dontslopme-ui" -ForegroundColor Green
+

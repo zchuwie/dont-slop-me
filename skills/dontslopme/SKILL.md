@@ -1,6 +1,6 @@
 ---
 name: dontslopme
-version: 0.2.0
+version: 0.2.1
 description: Core orchestrator and anti-slop filter for AI coding agents. Enforces grep-first slice discovery, 5-line design contracts, domain calibration, minimal diffs, and telegraphic output.
 license: MIT
 ---
