@@ -1,118 +1,129 @@
 # Copy and Code Hygiene Reference
 
-Standards for anti-slop copy, comment sanitation, and telegraphic communication for AI coding agents.
+Standards for anti-slop copy, comment sanitation, design contracts, and telegraphic communication for AI coding agents.
+
+## Caveman + Ponytail Output Discipline
+
+AI agents frequently inflate responses with conversational pleasantries, hedging disclaimers, and unnecessary code narration. The Caveman + Ponytail discipline enforces maximum information density with minimal token cost.
+
+### Core Output Rules
+
+- **Zero conversational preamble:** Never start responses with "Sure!", "Certainly!", "I can help you with that", or "Great question!".
+- **Zero post-code narration:** Do not restate what the code does line by line unless the user explicitly requested a tutorial.
+- **Surgical diffs only:** Emit compact diffs or single-block replacements instead of reprinting 200+ lines of unchanged source.
+- **Audit schema:** Format every finding as `file:line | violation | fix` followed by a single-line gate verdict.
+
+## The 5-Line Design Contract
+
+Before writing any new component, page, or complex layout, declare a 5-line design contract. This aligns domain requirements without speculative over-engineering.
+
+```text
+1. Codebase Fit: [Stack detected, manifest packages used, existing tokens referenced]
+2. Domain Tier & Palette: [Dense SaaS | Editorial/Marketing | Playful Consumer], [1 accent token], [no pure black/white]
+3. Typography: [Header font / Body font], tabular-nums for numeric columns
+4. Dials: ENERGY [1-5] | RHYTHM [1-5] | MOTION [1-5] | Focal Point: [target element] | Cadence: [steady/varied]
+5. State Coverage: Loading: [skeleton/spinner], Empty: [illustration/text], Error: [retry banner], Success: [inline badge]
+```
+
+### Domain Calibration Tiers
+
+Calibrate density, typography, and motion to the product domain:
+
+#### 1. Dense SaaS
+
+- **Target products:** Dashboards, analytics platforms, developer tooling, financial tables.
+- **Characteristics:** 12px to 14px compact typography, high information density, muted 1px borders, subtle hover lifts, strict `tabular-nums` alignment on tables and metrics.
+- **Dials:** ENERGY 2 | RHYTHM 2 | MOTION 1.
+
+#### 2. Editorial / Marketing
+
+- **Target products:** Blogs, documentation sites, brand landing pages, product announcements.
+- **Characteristics:** High typographic contrast (bold display header + legible text body), generous whitespace, narrative pacing, curated visual focal points.
+- **Dials:** ENERGY 4 | RHYTHM 4 | MOTION 3.
+
+#### 3. Playful Consumer
+
+- **Target products:** Mobile apps, community tools, educational platforms, personal productivity.
+- **Characteristics:** Friendly geometry, tactile spring micro-presses (`scale(0.97)`), warm tinted neutral canvases, celebratory milestone feedback.
+- **Dials:** ENERGY 5 | RHYTHM 3 | MOTION 4.
+
+## Fast Path for Micro-Edits
+
+When executing targeted bug fixes, single-line adjustments, or localized refactors touching under 20 lines:
+
+- Skip the 5-line Design Contract.
+- Skip conversational greetings and post-mortems.
+- Emit the surgical code change directly.
+- Skip the audit gate summary unless an audit was specifically requested.
 
 ## Anti-Slop Copywriting Standards
 
-AI models reflexively default to inflated marketing adjectives, passive constructions, and repetitive transition words. When writing UI text, documentation, commit messages, or pull request descriptions, enforce concrete, direct language.
+AI models default to vague marketing adjectives, corporate jargon, and passive padding. Enforce concrete, user-action language.
 
 ### Forbidden Words and Phrases
 
-The following terms signal AI-generated filler and must be eliminated:
+The following terms signal AI-generated filler and must be eliminated from all UI copy, commit messages, and documentation:
 
-- **Inflated superlatives:** seamless, effortlessly, game-changer, revolutionary, cutting-edge, state-of-the-art, unrivaled.
+- **Inflated buzzwords:** supercharge, seamless, seamlessly, unlock, elevate, empower, revolutionize, game-changer, cutting-edge, state-of-the-art.
 - **Academic and literary cliches:** delve, tapestry, testament, beacon, foster, resonate, paramount, symphony.
-- **Empty corporate jargon:** leverage, streamline, unlock, elevate, empower, synergy, holistically, robust.
-- **Conversational padding:** in conclusion, it is worth noting, look no further, without further ado, let us dive in.
+- **Corporate filler:** leverage, streamline, synergy, holistically, robust, scalable architecture.
+- **Conversational scaffolding:** in conclusion, it is worth noting, look no further, without further ado, let us dive in.
 
 ### Slop vs Direct Copy Matrix
 
 | Slop Pattern | Direct Alternative | Rationale |
 | :--- | :--- | :--- |
-| "Unlock seamless collaboration across your entire team." | "Share workspaces and edit in real time." | Replaces vague metaphor with concrete feature capability. |
-| "Delve into your data with our powerful analytics engine." | "Query tables and filter query logs." | Cuts academic verb and replaces generic boast with user action. |
-| "A testament to cutting-edge craft and modern design." | "Built with accessible contrast and native dialogs." | Replaces subjective praise with technical specifications. |
-| "Leverage robust features designed to elevate productivity." | "Automate billing exports to CSV." | Removes empty enterprise jargon in favor of utility. |
+| "Supercharge your team's workflow with seamless sync." | "Sync database records in real time." | Concrete technical utility replaces vague buzzwords. |
+| "Unlock the power of next-generation analytics." | "Filter query performance by endpoint." | Actionable capability replaces marketing hyperbole. |
+| "A testament to cutting-edge craft and design." | "Built with accessible contrast and native dialogs." | Measurable engineering standard replaces subjective boast. |
+| "Delve into your data with our powerful tools." | "Search logs by timestamp and status code." | Clear command replaces literary filler. |
 
 ## Code Comment Hygiene
 
-Code comments cost context tokens on every file read. Obvious comments waste tokens and obscure signal.
+Code comments cost tokens on every read. Obvious comments obscure logic and degrade context windows.
 
-### The Zero-Slop Comment Filter
+### Prohibited Comments
 
-Follow these rules when reviewing or generating comments:
+- **Echo comments:** Comments that simply narrate code statements:
+  ```typescript
+  // BAD: Narrates standard assignment
+  // Set count to zero
+  let count = 0;
 
-- **Echo comments are prohibited:** Comments that rephrase identifiers, function names, or obvious standard library calls must be removed immediately.
-- **Dead code is prohibited:** Never leave commented-out code blocks in production files. Rely on version control.
-- **Section banner dividers are prohibited:** Avoid large ASCII line separators (such as `// ============= UTILS =============`).
-- **File header boilerplate is prohibited:** Remove generic generated headers like `// Created by Assistant on ...`.
+  // BAD: Narrates standard conditional
+  // Check if user is authenticated
+  if (!isAuthenticated) return null;
+  ```
+
+- **Dead code:** Commented-out code blocks left behind. Rely on git history.
+- **ASCII dividers:** Large decorative separators (such as `// ============ HELPERS ============`).
+- **Generated banners:** Headers like `// Created by Assistant on 2026-11-13`.
 
 ### Permitted Comments
 
-Comments are strictly reserved for information that cannot be expressed in code:
+Reserve comments exclusively for non-obvious constraints:
 
-- **Hardware or browser quirks:** Workarounds for vendor-specific browser rendering bugs.
-- **Mathematical or algorithmic invariants:** Mathematical proofs or non-obvious algorithmic complexity guarantees.
-- **External API peculiarities:** Explaining unexpected payload structures mandated by legacy third-party endpoints.
-- **Security trust boundaries:** Rationale for unescaped HTML or specific sanitization choices.
+- **Browser and engine bugs:** Documenting workarounds for browser-specific quirks.
+- **Mathematical invariants:** Explaining non-obvious physics algorithms or coordinate formulas.
+- **External protocol requirements:** Explaining quirky schema mandates from legacy external APIs.
+- **Security trust boundaries:** Rationale for sanitization methods or token validation logic.
 
-### Comment Diff Examples
+## Standard Audit Gate Format
 
-#### Negative Example (Slop Comment)
+When auditing a codebase or reviewing pull requests:
 
-```typescript
-// BAD: Echoes identifier names and narrates standard language operations
-// increment count by one
-const count = currentCount + 1;
+1. List violations in single-line rows:
+   ```text
+   src/views/Dashboard.tsx:42 | echo-comment | `// set state` echoes hook call -> remove comment
+   src/components/Banner.tsx:15 | slop-copy | "Supercharge your work" -> replace with "Export reports to CSV"
+   src/styles/theme.css:88 | hardcoded-color | Pure black `#000000` found -> replace with `#0f172a`
+   ```
 
-// check if user exists
-if (!user) {
-  // return null if no user
-  return null;
-}
-```
-
-#### Positive Example (Clean Hygiene)
-
-```typescript
-// GOOD: Code is self-explanatory, zero comments needed
-const count = currentCount + 1;
-
-if (!user) {
-  return null;
-}
-
-// GOOD: Explains non-obvious external browser quirk
-// Safari 16 bug: flex-basis calculation ignores min-width when gap is non-zero
-element.style.minWidth = '0px';
-```
-
-## Telegraphic Communication Protocol
-
-When communicating with users or returning results to an orchestrating agent:
-
-### 1. Preamble Elimination
-
-Strip all opening conversational scaffolding:
-
-- **Do not say:** "Sure! I would be glad to help you refactor that component today."
-- **Do not say:** "Here is the updated code that fulfills your exact request:"
-- **Do say:** Jump immediately to the action, command, diff, or result.
-
-### 2. Post-Code Narration Ban
-
-Do not follow code blocks with paragraphs explaining what each line accomplishes unless explicitly asked to explain trade-offs.
-
-### 3. Compact Diff Formatting
-
-Never reprint hundreds of lines of unchanged code. Use compact diffs or targeted symbol replacements:
-
-```typescript
-// path/to/target.ts
-<<<<
-- const isEnabled = false;
-====
-+ const isEnabled = true;
->>>>
-```
-
-### 4. Dense One-Line Audit Format
-
-Report code hygiene issues in a single line per finding:
-
-```text
-src/services/auth.ts:14 - [echo-comment] - `// initialize token` echoes assignment -> remove line
-src/components/Hero.tsx:32 - [slop-copy] - "Unlock seamless workflows" -> replace with "Run builds in seconds"
-src/utils/math.ts:50 - [dead-code] - Commented out legacy fallback -> remove lines 50-58
-```
-
+2. Conclude with a single-line gate verdict:
+   ```text
+   GATE: PASS
+   ```
+   or
+   ```text
+   GATE: FAIL (3 issues detected)
+   ```

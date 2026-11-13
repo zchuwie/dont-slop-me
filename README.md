@@ -2,19 +2,51 @@
 
 A lightweight, multi-skill anti-slop governance system for AI coding agents built on the open `agentskills.io` standard.
 
-`dontslopme` prevents AI-generated code slop: generic aesthetic cliches, repetitive boilerplate, conversational filler, speculative abstractions, and context-bloating tool usage.
+`dontslopme` stops AI-generated slop: generic visual cliches, conversational padding, inflated hype copy, narrating comments, speculative wrappers, and context-bloating file reads.
 
-## Why dontslopme?
+## One-Line Global Installation
 
-Most AI skill definitions suffer from context bloat: large monolithic prompt files inject thousands of tokens into every conversation turn before any code is inspected.
+Install globally across macOS, Linux, WSL, and Windows with a single command:
 
-`dontslopme` enforces an extreme token-efficiency model:
+### Via `npx skills` (Recommended)
 
-- **Ultra-Compact Core:** Every `SKILL.md` is strictly under 115 lines (~450 tokens), loading minimal context into initial agent memory.
-- **Just-In-Time (JIT) Progressive Disclosure:** Deep checklists, regex patterns, motion tokens, and few-shot diffs remain isolated in `references/*.md` and are loaded only when a task demands them.
-- **Caveman + Ponytail Execution Discipline:** Agents are instructed to slice-read files (target `±15` lines), reuse native platform features, emit minimal diffs, and strip all conversational preamble.
-- **Zero Runtime Dependencies:** Pure Markdown specification. Works without Node, Python, or shell runtime scripts.
-- **Universal Portability:** Compatible with Cursor, Claude Code, VS Code Copilot/Continue, Windsurf, Gemini CLI, and Codex CLI across web, mobile, and backend codebases.
+```bash
+npx skills add zchuwie/dontslopme --global
+```
+
+### Via Bash (`curl`) - macOS, Linux, WSL
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zchuwie/dontslopme/main/install.sh | bash
+```
+
+### Via PowerShell (`irm`) - Windows
+
+```powershell
+irm https://raw.githubusercontent.com/zchuwie/dontslopme/main/install.ps1 | iex
+```
+
+The installer automatically detects and registers skills in:
+
+- Open Agent Skills standard: `~/.agents/skills/`
+- Cursor: `~/.cursor/rules`
+- VS Code Continue / Copilot: `~/.continue/prompts`
+- Windsurf: `~/.codeium/windsurf/memories`
+- Claude Code: `~/.claude/skills`
+- Gemini CLI: `~/.gemini/skills`
+- Codex CLI: `~/.codex/skills`
+
+For project-local installation or uninstallation:
+
+```bash
+./install.sh --project      # Install to local project
+./install.sh --uninstall    # Remove installed skills
+```
+
+```powershell
+.\install.ps1 -Project      # Install to local project
+.\install.ps1 -Uninstall    # Remove installed skills
+```
 
 ## Repository Architecture
 
@@ -23,6 +55,8 @@ dontslopme/
 ├── LICENSE
 ├── README.md
 ├── VERSION
+├── install.sh
+├── install.ps1
 └── skills/
     ├── dontslopme/
     │   ├── SKILL.md
@@ -36,114 +70,88 @@ dontslopme/
             └── ux-and-motion-spec.md
 ```
 
-## Skill Catalog
-
-### 1. `dontslopme` (Core Orchestrator)
-
-The base filter and token-conservation engine. It governs how coding agents read code, structure edits, and communicate with the user.
-
-- **Primary role:** Enforce slice-read discovery, minimal diffs, native platform reuse, and telegraphic output.
-- **Key references:**
-  - `codebase-discovery.md`: Targeted grep recipes and `±15` line window extraction rules.
-  - `copy-and-code-hygiene.md`: Forbidden AI copy cliches, comment hygiene, and telegraphic bullet standards.
-
-### 2. `dontslopme-ui` (Craft & Motion)
-
-The visual craft and interaction skill. It eliminates generic AI aesthetics in favor of intentional design, tactile physics, and accessible ergonomics.
-
-- **Primary role:** Eliminate generic purple-cyan gradients, excessive glassmorphism, pill buttons, floating card soup, and robotic transitions.
-- **Key references:**
-  - `anti-slop-checklist.md`: Visual defect catalog covering color, elevation, surface texture, and layout.
-  - `ux-and-motion-spec.md`: Spring curves, duration budgets, accessibility (`prefers-reduced-motion`), and micro-interaction states across CSS, Tailwind, Framer Motion, SwiftUI, and Flutter.
-
 ## Core Execution Discipline
 
 Every agent running `dontslopme` adheres to three execution rules:
 
-### 1. Slice-Read Only (Low Input Tokens)
+### 1. Grep-First Slice Discovery (Low Input Tokens)
 
-Never read full source files to inspect a defect or verify an import. Agents must:
+Never read full source files to inspect logic or verify imports:
 
-1. Run targeted `grep` or file search queries.
-2. Read only the matching region (`±15` lines).
-3. Expand context only when boundary conditions require it.
+- Scan manifests (`package.json`, `pubspec.yaml`, `Package.swift`, `Cargo.toml`) for existing packages before suggesting additions.
+- Search design tokens (`@theme`, `--color-`, `:root`, `tailwind.config.*`) and motion tokens (`prefers-reduced-motion`) before writing CSS.
+- Read strictly `±15` lines around matches using line-range slice tools.
 
-### 2. Minimal Diffs and Native Reuse (Low Code Tokens)
+### 2. Adaptive Execution Modes
 
-Do not reinvent what the platform provides. Agents must:
+- **Fast Path (Micro-Edits):** For targeted bug fixes under 20 lines, emit surgical diffs immediately. Skip greetings, preambles, and gate reports.
+- **Full Build (5-Line Design Contract):** Before generating new components or pages, declare the 5-line contract:
+  1. Codebase Fit: detected stack and design token sources.
+  2. Domain Tier & Palette: tier selection, 1 accent color, no pure black (`#000000`) or pure white (`#ffffff`).
+  3. Typography: header/body pairing, `tabular-nums` for numbers.
+  4. Dials: `ENERGY` [1-5], `RHYTHM` [1-5], `MOTION` [1-5], focal point, cadence.
+  5. State Coverage: explicit states for Loading, Empty, Error, Success.
 
-- Prioritize native HTML5 elements (`<dialog>`, `<details>`, `<input type="date">`) and standard CSS (`clamp()`, `min()`, `display: grid`) before pulling npm packages.
-- Reuse existing component libraries and design tokens found in the target repository.
-- Emit precise diffs or isolated replacements rather than rewriting entire files.
+### 3. Caveman + Ponytail Output Discipline (Low Output Tokens)
 
-### 3. Telegraphic Output (Low Output Tokens)
+- Strip greetings, pleasantries, and conversational transitions.
+- Ban AI hype words (*Supercharge*, *Seamless*, *Unlock*, *Elevate*, *Empower*, *Delve*, *Tapestry*).
+- Ban echo code comments (`// Set state`, `// Initialize count`).
+- Format audits as single-line rows ending in a gate verdict:
+  ```text
+  file:line | violation | fix
+  GATE: PASS / FAIL
+  ```
 
-Save tokens and time by stripping conversational fluff:
+## Domain Calibration Tiers
 
-- Omit greetings, transitional pleasantries, and sign-offs ("Certainly!", "I hope this helps!").
-- Report audit findings as dense one-line bullets: `file:line` + defect + recommended fix.
-- Output clean code without narrative post-mortems.
+Calibrate density, typography, and motion to your product domain:
 
-## Installation & Setup
+| Domain Tier | Density & Typography | Motion & Interaction | Dials |
+| :--- | :--- | :--- | :--- |
+| **Dense SaaS** | 12-14px compact type, high density, `tabular-nums` | Subtle hover lifts, snappy 120ms feedback | `E:2 R:2 M:1` |
+| **Editorial / Marketing** | Expressive display headings, generous whitespace | Paced scroll reveals, curated focal points | `E:4 R:4 M:3` |
+| **Playful Consumer** | Friendly geometry, warm off-white canvases | Tactile micro-presses (`scale(0.97)`), spring physics | `E:5 R:3 M:4` |
 
-### Agent Skills Standard (`agentskills.io`)
+## Before and After Examples
 
-Clone or link the repository into your global or project agent skills folder:
+### 1. UI Copy
 
-```bash
-git clone https://github.com/zchuwie/dontslopme.git
+- **Before (AI Slop):** *"Supercharge your team's workflow with seamless real-time collaboration."*
+- **After (dontslopme):** *"Share workspaces and edit together in real time."*
+
+### 2. Code Comments
+
+```typescript
+// BEFORE: Echo comments narrating standard statements
+// set count to count plus one
+const count = currentCount + 1;
+// check if user exists
+if (!user) {
+  return null;
+}
+
+// AFTER: Self-documenting code, zero wasted tokens
+const count = currentCount + 1;
+if (!user) {
+  return null;
+}
 ```
 
-### Setup for Cursor
+### 3. Audit Gate Output
 
-Add the skills to `.cursor/rules` or link into your project prompt configuration:
-
-```bash
-mkdir -p .cursor/rules
-cp -r dontslopme/skills/* .cursor/rules/
+```text
+src/components/Header.tsx:18 | echo-comment | `// render nav links` echoes map call -> remove line
+src/views/Hero.tsx:28 | slop-copy | "Supercharge your work" -> replace with "Run builds in seconds"
+src/styles/theme.css:42 | hardcoded-color | Pure black `#000000` found -> replace with `#0f172a`
+GATE: FAIL (3 issues detected)
 ```
 
-### Setup for Claude Code
+## Universal Portability
 
-Symlink or copy the skills into your project:
-
-```bash
-mkdir -p .claude/skills
-ln -s $(pwd)/dontslopme/skills/dontslopme .claude/skills/dontslopme
-ln -s $(pwd)/dontslopme/skills/dontslopme-ui .claude/skills/dontslopme-ui
-```
-
-Add an entry pointer to `CLAUDE.md`:
-
-```markdown
-<!-- dontslopme:start -->
-## dontslopme Rules
-For coding, architecture, and code discovery, consult `skills/dontslopme/SKILL.md`.
-For UI, styling, and motion, consult `skills/dontslopme-ui/SKILL.md`.
-Follow slice-read discovery, native reuse, and telegraphic output at all times.
-<!-- dontslopme:end -->
-```
-
-### Setup for Gemini CLI & Codex CLI
-
-Point your repository root instructions (`AGENTS.md` or `GEMINI.md`) to the core skills:
-
-```markdown
-## Active Skills
-
-- Core hygiene: skills/dontslopme/SKILL.md
-- UI craft: skills/dontslopme-ui/SKILL.md
-```
-
-## Specification Compliance
-
-This repository conforms strictly to the `agentskills.io` open standard:
-
-- Every skill maintains a valid YAML frontmatter with `name`, `description`, and `license`.
-- Skill names match their parent directory names exactly.
-- Skill descriptions use third-person phrasing and stay well below 1024 characters.
-- Skill instruction files remain below 115 lines for optimal token economics.
-- All deep reference material is organized into `references/` subdirectories for just-in-time retrieval.
+- **100% Pure Markdown Skills:** Zero Python or Node runtime dependencies.
+- **Cross-Framework:** Language-agnostic across HTML/CSS, React, Next.js, Vue, Svelte, Astro, SwiftUI, Flutter, and React Native.
+- **Cross-Agent:** Fully compatible with Cursor, Claude Code, VS Code Copilot/Continue, Windsurf, Gemini CLI, and Codex CLI.
 
 ## Versioning
 

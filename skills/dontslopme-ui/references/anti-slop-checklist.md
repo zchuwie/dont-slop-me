@@ -1,110 +1,271 @@
 # Anti-Slop Visual Checklist
 
-Comprehensive visual defect catalog, telltale markers, design rationale, and surgical remedies for AI-generated interfaces.
+Defect catalog, regex detection patterns, before/after diffs, and remediation rules for AI-generated interfaces.
 
-Each entry follows the tri-part evaluation pattern:
+## Fast Slop-Detection Grep Recipes
 
-- **Tell:** The identifiable symptom that signals unrefined AI generation.
-- **Why:** The ergonomic, cognitive, or brand reason the pattern fails.
-- **Fix:** The concrete, minimal code remediation.
+Scan codebases for telltale UI slop patterns without reading entire files:
 
-## 1. Color and Surface Anti-Patterns
+### 1. Pill Shapes on Everything
 
-### Generic Blue-to-Purple / Cyan Gradient
+```text
+class="[^"]*\b(rounded-full)\b[^"]*"
+```
 
-- **Tell:** Hero sections or background canvases flooded with deep indigo-to-violet or cyan-to-purple diagonal linear gradients.
-- **Why:** This is the most common default color treatment in AI image and code training data. It flags an interface as generic template output lacking brand identity.
-- **Fix:** Extract colors from the project design tokens or brand specifications. Use grounded neutral background tones (`#0f172a`, `#f8fafc`) and introduce color through purposeful content highlights or border accents.
+### 2. Random Italics for Fake Sophistication
 
-### Pure Black (#000000) or Pure White (#ffffff) Extremes
+```text
+\b(italic|font-style:\s*italic)\b|<(em|i)>
+```
 
-- **Tell:** Canvases, backgrounds, card surfaces, or body text styled with stark `#000000` or `#ffffff` extremes.
-- **Why:** Absolute extremes produce harsh optical vibration and halation on modern displays, increasing eye fatigue. Natural materials and crafted interfaces always carry subtle warmth or cool undertones.
-- **Fix:** Replace pure white with warm or cool off-whites (`#f8fafc`, `#f9fafb`, `#fafafa`) for light backgrounds. Replace pure black with rich charcoals or dark slates (`#090d16`, `#0f172a`, `#121214`) for dark backgrounds. Set primary typography to dark slate (`#0f172a`, `#1e293b`) against light backgrounds, and soft off-white (`#f1f5f9`, `#f4f4f5`) against dark backgrounds.
+### 3. Over-Tightened Negative Kerning
 
-### Excessive Glassmorphism
+```text
+\b(tracking-tighter|letter-spacing:\s*-[0-9.]+px)\b
+```
 
-- **Tell:** `backdrop-filter: blur(...)` and semi-transparent white/black backgrounds applied simultaneously to navbars, cards, modals, sidebars, and dropdowns.
-- **Why:** Stacking blurred layers erases visual depth, muddies contrast ratios, degrades rendering performance on mobile GPUs, and eliminates clear foreground-background hierarchy.
-- **Fix:** Restrict frosted glass effects to a maximum of one persistent floating layer (for example, a sticky navigation header). Keep cards, dialogs, and panels opaque.
+### 4. Pure Black and Pure White Extremes
 
-### Glow Overuse
+```text
+#(000000|ffffff)\b|#000\b|#fff\b|rgba?\(\s*0\s*,\s*0\s*,\s*0\s*(,|\))|rgba?\(\s*255\s*,\s*255\s*,\s*255\s*(,|\))
+```
 
-- **Tell:** Outer box-shadow glows (`box-shadow: 0 0 25px rgba(...)`) applied to normal cards, avatars, section dividers, and static badges.
-- **Why:** Glow mimics optical emission. When every passive surface appears to emit light, nothing draws focal priority, creating visual noise.
-- **Fix:** Reserve glow strictly for active status indicators (for example, live server status or camera active) or subtle focus-visible rings on interactive controls.
+### 5. Eyebrow Tags and Section Numbering Clichés
 
-### Confetti Palettes (Too Many Colors)
+```text
+\b(01\s*\/\/\s*|0[1-9]\s*\.\s*|EYEBROW|KICKER)\b
+```
 
-- **Tell:** Using green for success, blue for links, yellow for alerts, purple for tags, pink for accents, and orange for icons all on the same screen.
-- **Why:** A scattered spectrum destroys intentional visual hierarchy and cognitive priority.
-- **Fix:** Enforce the 60-30-10 color rule: 60% dominant neutral foundation, 30% structural secondary tone, and 10% purposeful accent color for primary actions.
+### 6. Verbose Titles Terminated with Periods
 
-### Unmotivated Dark Mode Default
+```text
+<h[1-6][^>]*>[^<]*\.\s*<\/h[1-6]>
+```
 
-- **Tell:** Forcing an all-black or near-black background on utility applications, dashboards, or documentation with no dark/light consideration.
-- **Why:** Dark mode is an intentional context choice for media consumption and low-light environments, not a generic proxy for sophistication. Reading dense text on pitch black can increase eye strain.
-- **Fix:** Build with semantic CSS custom properties that support system color-scheme preferences (`prefers-color-scheme`), defaulting to light or neutral slate for productivity tools.
+## The 20 AI Design Slop Indicators to Ban
 
-## 2. Geometry and Elevation Anti-Patterns
+### 1. Tags & Pills Everywhere
 
-### Pill Shape Uniformity
+- **Violation:** Wrapping every status, category, feature name, and date in a `rounded-full` pill badge.
+- **Remediation:** Remove filler badges. Use plain text with subtle color or bullet separation.
 
-- **Tell:** Buttons, text input fields, search bars, tag badges, cards, and modal dialogs all styled with `border-radius: 9999px` or `rounded-full`.
-- **Why:** Universal pill shapes erase component identity. Users rely on subtle geometric conventions to distinguish click targets from input fields and static containers.
-- **Fix:** Establish a clear radius token scale:
-  - Buttons and inputs: 6px to 8px (`rounded-md` or `rounded-lg`).
-  - Cards and dialogs: 10px to 16px (`rounded-xl`).
-  - Badges and count tags: pill shape permitted (`rounded-full`).
+### 2. Excessive Italics
 
-### Diffuse Floating Shadows
+- **Violation:** Italicizing random words in headlines to simulate deep editorial nuance.
+- **Remediation:** Keep display typography in upright roman weights. Use word choice for emphasis.
 
-- **Tell:** Cards elevated with massive, low-opacity blur radii (for example: `0 20px 50px rgba(0,0,0,0.08)`) with no directional source.
-- **Why:** Overly diffuse shadows create a floaty, disconnected aesthetic where surfaces lack physical weight and spatial grounding.
-- **Fix:** Use layered, tight directional shadows with subtle borders:
-  ```css
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 1px rgba(0, 0, 0, 0.03);
-  border: 1px solid var(--border-subtle);
-  ```
+### 3. Instrument Serif Clichés
 
-### Stock Grid and Dot Matrices
+- **Violation:** Defaulting to trendy retro display serifs (*Instrument Serif*, *Editorial New*) on modern software tools.
+- **Remediation:** Match typography to the domain: robust geometric grotesques for SaaS, functional system sans for productivity.
 
-- **Tell:** Subtle graph paper grids, dot arrays, or isometric wireframes placed behind hero text to convey technical depth.
-- **Why:** Stock background patterns add visual clutter without communicating domain value.
-- **Fix:** Use clean negative space. Let typography hierarchy, whitespace, and sharp layout grid alignment communicate technical precision.
+### 4. Negative Kerning
 
-### Sterile Default (The Safe Void)
+- **Violation:** Crushing letter-spacing on display headings (`tracking-tighter` or `-0.05em`), causing letters to collide.
+- **Remediation:** Use standard tracking (`tracking-tight` at most for display sizes above 36px, `tracking-normal` for body).
 
-- **Tell:** Flat grey borders, zero accent color, generic system sans-serif typography, and stark white backgrounds with no visual hierarchy.
-- **Why:** Over-filtering without artistic direction produces a soulless wireframe rather than a production-ready product.
-- **Fix:** Introduce typographic rhythm (high-contrast headline weight paired with clean body text), deliberate whitespace scaling, and an unmistakable brand accent on primary interactive targets.
+### 5. Over-the-Top Detailed UI
 
-## 3. Structural and Semantic Anti-Patterns
+- **Violation:** Micro-badges, mini-graphs, tiny progress circles, and redundant metadata crammed into simple cards.
+- **Remediation:** Remove secondary clutter. Elevate the single primary metric or action.
 
-### Div Soup and Nested Container Bloat
+### 6. Overusing Dividers
 
-- **Tell:** Three or more levels of nested `<div>` wrappers around a single paragraph or image element.
-- **Why:** Bloats DOM size, degrades screen reader accessibility, and wastes parser tokens during agent refactoring.
-- **Fix:** Flatten tree structures using modern CSS grid or flex alignment directly on semantic parents (`<header>`, `<main>`, `<section>`, `<article>`, `<aside>`).
+- **Violation:** Hairline border dividers (`border-b`, `<hr>`) between every title, paragraph, metric, and row.
+- **Remediation:** Group related elements using whitespace hierarchy (12px, 24px, 48px) instead of visual lines.
 
-### Third-Party Component Bloat vs Native Platform Primitives
+### 7. Muddy Color Shades & Opacities
 
-- **Tell:** Pulling multi-kilobyte JavaScript libraries to render basic modals, accordions, tooltips, or color pickers.
-- **Why:** Inflates bundle size, introduces hydration lag, and causes cross-platform accessibility bugs that standard platform elements already solve.
-- **Fix:** Default to native browser and platform primitives first:
+- **Violation:** Stacking multiple layers of low-opacity grays (`rgba(255,255,255,0.05)` on `#1e293b`), creating dingy, washed-out surfaces.
+- **Remediation:** Use solid, intentional background tones with verified WCAG AA contrast.
 
-| UI Need | Bloated AI Default | Native Platform Primitive |
-| :--- | :--- | :--- |
-| Modal Dialog | React Portal + custom backdrop div + key listeners | Native `<dialog>` element with `.showModal()` |
-| Collapsible / Accordion | Custom state hook + height animation wrapper | Native `<details>` and `<summary>` elements |
-| Tooltip / Popover | Floating UI / Popper.js wrapper library | HTML `popover` attribute and CSS anchor positioning |
-| Color Picker | Canvas-based npm color wheel | Native `<input type="color">` |
-| Autocomplete | Custom filtered dropdown list component | Native `<input list="...">` with `<datalist>` |
-| Date Selection | Custom calendar grid component | Native `<input type="date">` |
+### 8. Containers with Borders
 
-### Mobile Tap Target Violations
+- **Violation:** Enclosing every paragraph, statistic, icon, and button in its own bordered container box.
+- **Remediation:** Let content breathe on the base surface. Reserve borders strictly for distinct interactive cards.
 
-- **Tell:** Interactive icons or text links with hitboxes smaller than 24x24 pixels, packed closely together.
-- **Why:** Prevents reliable fingertip activation on touch devices, causing rage clicks and accessibility failures.
-- **Fix:** Guarantee minimum 44x44px touch targets on mobile viewports using CSS padding or minimum dimension constraints (`min-height: 44px; min-width: 44px`).
+### 9. Overly Detailed Diagrams
 
+- **Violation:** Decorative SVG node graphs, simulated neural networks, or circuit lines that communicate no real data.
+- **Remediation:** Show the actual product UI, real code samples, or concrete data tables.
+
+### 10. Verbose / Redundant Text
+
+- **Violation:** Restating the headline in an eyebrow tag above and repeating it again in a subtitle below.
+- **Remediation:** Delete redundant labels. A headline should state the capability without conversational padding.
+
+### 11. Code Breadcrumbs
+
+- **Violation:** Fabricated terminal paths (`app > core > index.ts`) rendered above consumer cards to look technical.
+- **Remediation:** Remove decorative paths. Use clear domain titles.
+
+### 12. 01 // Section Numbering
+
+- **Violation:** Numbering section titles as `01 // Overview`, `02 // Features` to mimic hacker aesthetics.
+- **Remediation:** State the section title plainly without pseudocode numbering.
+
+### 13. Eyebrows
+
+- **Violation:** Tiny uppercase kickers (`FEATURE LAUNCH`, `INNOVATION`) hovering above every heading.
+- **Remediation:** Integrate the context directly into the main headline.
+
+### 14. Dithering
+
+- **Violation:** Heavy pixel noise or dithering patterns overlaying clean vector graphics.
+- **Remediation:** Keep gradients smooth and vectors clean.
+
+### 15. ASCII Images
+
+- **Violation:** Embedding decorative ASCII art boxes or terminal frames into consumer web products.
+- **Remediation:** Use crisp SVG icons or high-fidelity UI components.
+
+### 16. Squircles Everywhere
+
+- **Violation:** Applying complex super-ellipse squircle masks to standard buttons, icons, and thumbnails.
+- **Remediation:** Use standard platform border-radii.
+
+### 17. Excessive Mono Fonts
+
+- **Violation:** Rendering marketing headlines, paragraph text, or button text in `font-mono`.
+- **Remediation:** Restrict monospace fonts strictly to code blocks, logs, and numeric data columns.
+
+### 18. ALL CAPS Subtitles
+
+- **Violation:** Formatting entire multi-word subtitle sentences in uppercase tracking.
+- **Remediation:** Use sentence case for subtitles to maintain rapid scanning legibility.
+
+### 19. Gradient Backgrounds
+
+- **Violation:** Diagonal indigo-to-purple or cyan-to-fuchsia linear gradients flooding hero canvases.
+- **Remediation:** Use grounded solid neutral backgrounds (`#0f172a`, `#f8fafc`) with a single crisp accent.
+
+### 20. Periods in Titles
+
+- **Violation:** Terminating 2-3 word marketing headings with a full stop (for example: *Work Faster.*).
+- **Remediation:** Do not end titles or display headings with periods.
+
+### Supplementary Rule: No Pure Black or White
+
+- **Violation:** Stark `#000000` or `#ffffff` canvases and text causing optical vibration and halation.
+- **Remediation:** Use off-whites (`#f8fafc`, `#fafafa`) and deep charcoals/slates (`#090d16`, `#0f172a`).
+
+## The 20 Ways to Unslop UI
+
+### 1. Delete Filler Badges
+
+Replace badge containers with plain text:
+
+```html
+<!-- BEFORE: Slop badge -->
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+  New Feature
+</span>
+
+<!-- AFTER: Clean text label -->
+<span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+  New Feature
+</span>
+```
+
+### 2. Drop Redundant Labels
+
+Eliminate self-evident descriptor labels (e.g. `Email Address:` before an input clearly styled as an email field).
+
+### 3. Unitalicize Random Words
+
+Render all display headers in upright letterforms.
+
+### 4. Mono Only Where Needed
+
+Reserve `font-mono` strictly for hashes, code snippets, git commits, and table figures.
+
+### 5. Use a Design System
+
+Bind all spacing, colors, and radii to project tokens rather than inventing ad-hoc tailwind values.
+
+### 6. Show the Actual Product
+
+Replace abstract SVG blobs or 3D glass spheres with functional screenshots, code editors, or interactive widgets.
+
+### 7. Enlarge the Main Feature
+
+Create an unmistakable visual hierarchy: make the primary product capability dominate 60% of the viewport.
+
+### 8. Group with Spacing
+
+Separate layout blocks using consistent proportional whitespace (8px, 16px, 32px, 64px) rather than dividing lines.
+
+### 9. Make Headlines Specific
+
+- **Slop:** *"The All-in-One Platform for Modern Teams."*
+- **Unslopped:** *"Host PostgreSQL databases with instant branching."*
+
+### 10. Emphasize the CTA
+
+Ensure the primary call-to-action button is visually prominent with high contrast; keep secondary actions ghost or outline.
+
+### 11. Add 1 Accent Color
+
+Limit visual focus to a single deliberate brand accent (emerald, amber, cyan, or violet). Do not spray the entire spectrum.
+
+### 12. Keep Icons Consistent
+
+Use a single icon library (such as Lucide or Heroicons) with uniform stroke width (1.5px or 2px) throughout the application.
+
+### 13. Remove Embellishments
+
+Delete decorative corner crosses, floating particle dots, and blueprint background grid lines.
+
+### 14. Enforce Concentric Radii
+
+When nesting a card inside a container, match the corner curves mathematically:
+
+$$\text{inner\_radius} = \max(0, \text{outer\_radius} - \text{padding})$$
+
+```css
+/* Card container */
+.container {
+  padding: 12px;
+  border-radius: 16px;
+}
+/* Nested child button: 16px - 12px = 4px */
+.container .child-btn {
+  border-radius: 4px;
+}
+```
+
+### 15. Improve Text Contrast (WCAG AA)
+
+Guarantee a minimum contrast ratio of 4.5:1 for body copy and 3:1 for large display headings against their backgrounds.
+
+### 16. Wrap Headlines Properly
+
+Add `text-wrap: balance` to all headings to prevent unsightly single-word orphan lines:
+
+```css
+h1, h2, h3 {
+  text-wrap: balance;
+}
+```
+
+### 17. Align by Eye Not Pixels
+
+Optically center icons paired with text: shift uppercase icon baselines by 1px down to match x-height centerlines.
+
+### 18. Use Tabular Numbers
+
+Apply `font-variant-numeric: tabular-nums` or `font-feature-settings: "tnum"` to counters, pricing tables, and timers so characters don't jump horizontally during updates.
+
+```css
+.metric-value {
+  font-variant-numeric: tabular-nums;
+}
+```
+
+### 19. Add Loading States
+
+Every asynchronous data surface must provide a structural skeleton or discrete spinner, preventing abrupt layout shifts (CLS).
+
+### 20. Animate Useful Feedback
+
+Tie animations exclusively to state transitions: button press feedback, sheet slide-in, or toast confirmation.

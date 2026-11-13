@@ -1,7 +1,7 @@
 ---
 name: dontslopme
-version: 0.1.0
-description: Core orchestrator and anti-slop filter for AI coding agents. Enforces low-token slice reading, minimal diffs, native platform reuse, and telegraphic output. Routes tasks to specialized reference guides just-in-time.
+version: 0.2.0
+description: Core orchestrator and anti-slop filter for AI coding agents. Enforces grep-first slice discovery, 5-line design contracts, domain calibration, minimal diffs, and telegraphic output.
 license: MIT
 ---
 
@@ -9,49 +9,50 @@ license: MIT
 
 Core anti-slop filter and token-conservation engine for AI coding agents.
 
-Follow these rules on every code generation, discovery, and refactoring task.
+Follow these rules on every code generation, discovery, audit, and refactoring task.
 
-## The Caveman + Ponytail Triad
+## 1. Grep-First Slice Discovery
 
-### 1. Slice-Read Only (Low Input Tokens)
+Never read entire source files to inspect logic, verify imports, or locate styles.
 
-Never read full source files to inspect logic or audit defects.
+- Search manifests (`package.json`, `pubspec.yaml`, `Package.swift`, `Cargo.toml`) for existing dependencies before suggesting new ones.
+- Search design tokens (`@theme`, `--color-`, `:root`, `tailwind.config.*`) and motion tokens (`prefers-reduced-motion`) before styling.
+- Read strictly `±15` lines around grep matches using line-bounded slice tools.
+- For regex recipes and search patterns, load `references/codebase-discovery.md` JIT.
 
-- Run targeted `grep` or file search patterns first.
-- Read only `±15` lines around matches using line-range slice tools.
-- Never ingest entire multi-hundred-line files when looking for an isolated symbol.
-- For discovery recipes, load `references/codebase-discovery.md` JIT.
+## 2. Adaptive Execution Modes
 
-### 2. Native Reuse and Minimal Diffs (Low Code Tokens)
+### Fast Path (Micro-Edits)
 
-Do not reinvent what the platform, framework, or repo already provides.
+For targeted bug fixes, single-variable tweaks, or localized refactors under 20 lines:
 
-- Use standard library methods before adding utility packages.
-- Reuse existing components, hooks, and CSS tokens present in the repository.
-- Avoid speculative wrapper functions, one-caller abstractions, and factory layers.
-- Output only targeted diffs or surgical file edits instead of reprinting full files.
+- Emit surgical diff or replacement only.
+- Omit preamble, greetings, and gate audit reports.
 
-### 3. Telegraphic Output (Low Output Tokens)
+### Full Build (5-Line Design Contract)
 
-Cut all conversational waste and report facts directly.
+Before generating new components, pages, or features, state this contract:
 
-- Strip greetings, pleasantries, hedging, and conversational transitions.
-- Emit no unprompted code explanations or restatements of what the code does.
-- Audit findings must be single-line bullets: `file:line` - defect - fix.
-- For copywriting rules and comment cleanup, load `references/copy-and-code-hygiene.md` JIT.
+1. **Codebase Fit:** Detected stack, package manager, and active styling system.
+2. **Domain Tier & Palette:** Selected tier (Dense SaaS, Editorial/Marketing, Playful Consumer), 1 accent color, zero pure black (`#000000`) or pure white (`#ffffff`).
+3. **Typography:** Primary font pairing, weights, and `tabular-nums` for numeric data.
+4. **Dials:** `ENERGY` [1-5], `RHYTHM` [1-5], `MOTION` [1-5], primary focal point, and cadence.
+5. **State Coverage:** Explicit handling for Loading, Empty, Error, and Success states.
 
-## JIT Reference Routing
+## 3. Caveman + Ponytail Output Discipline
+
+- Strip greetings ("Certainly!", "I can help with that"), conversational hedging, and post-code narration.
+- Ban AI hype words (*Supercharge*, *Seamless*, *Unlock*, *Elevate*, *Empower*, *Delve*, *Tapestry*).
+- Ban narrating code comments (`// Set state`, `// Initialize count`, `// Render UI`).
+- Reuse existing repository primitives; avoid speculative one-caller helpers.
+- Format code audits as dense one-line rows:
+  `file:line | violation | fix`
+  Conclude audits with a single-line verdict: `GATE: PASS` or `GATE: FAIL (count issues)`.
+
+## 4. JIT Reference Routing
 
 Load deep documentation only when the current task demands it:
 
-- Codebase search, symbol audits, pattern scanning: read `references/codebase-discovery.md`.
-- Copywriting, prose cleanup, comment hygiene: read `references/copy-and-code-hygiene.md`.
-- Visual design, colors, cards, layout, or animations: activate `skills/dontslopme-ui/SKILL.md`.
-
-## Hard Constraints
-
-- Never add echo comments that rephrase code (for example: `// increment count`).
-- Never introduce new third-party dependencies when native language features suffice.
-- Never write speculative code for unrequested future requirements.
-- Never emit conversational filler ("Certainly!", "I have updated the file for you").
-
+- Codebase search recipes, manifest scanning: read `references/codebase-discovery.md`.
+- Copy rules, comment hygiene, contract specifications: read `references/copy-and-code-hygiene.md`.
+- UI craft, visual defects, spring physics: activate `skills/dontslopme-ui/SKILL.md`.
