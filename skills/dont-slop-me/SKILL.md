@@ -1,11 +1,11 @@
 ---
-name: dontslopme
+name: dont-slop-me
 version: 0.2.1
 description: Core orchestrator and anti-slop filter for AI coding agents. Enforces grep-first slice discovery, 5-line design contracts, domain calibration, minimal diffs, and telegraphic output.
 license: MIT
 ---
 
-# dontslopme
+# dont-slop-me
 
 Core anti-slop filter and token-conservation engine for AI coding agents.
 
@@ -55,4 +55,4 @@ Load deep documentation only when the current task demands it:
 
 - Codebase search recipes, manifest scanning: read `references/codebase-discovery.md`.
 - Copy rules, comment hygiene, contract specifications: read `references/copy-and-code-hygiene.md`.
-- UI craft, visual defects, spring physics: activate `skills/dontslopme-ui/SKILL.md`.
+- UI craft, visual defects, spring physics: activate `skills/dont-slop-me-ui/SKILL.md`.

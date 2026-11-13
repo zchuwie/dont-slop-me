@@ -1,4 +1,4 @@
-# dontslopme zero-dependency installer for Windows PowerShell
+# dont-slop-me zero-dependency installer for Windows PowerShell
 # Supports: -Global (default), -Project, and -Uninstall
 
 [CmdletBinding()]
@@ -12,16 +12,16 @@ param(
 $ErrorActionPreference = "Stop"
 
 if ($Help) {
-    Write-Host "dontslopme installer"
+    Write-Host "dont-slop-me installer"
     Write-Host "Usage: .\install.ps1 [-Global | -Project | -Uninstall]"
     Write-Host "  -Global    Install to user skills and detected IDE configurations (default)"
     Write-Host "  -Project   Install into current working directory"
-    Write-Host "  -Uninstall Remove installed dontslopme skills"
+    Write-Host "  -Uninstall Remove installed dont-slop-me skills"
     exit 0
 }
 
 $RepoOwner = "zchuwie"
-$RepoName = "dontslopme"
+$RepoName = "dont-slop-me"
 $RepoBranch = "main"
 $RawBase = "https://raw.githubusercontent.com/$RepoOwner/$RepoName/$RepoBranch"
 
@@ -36,7 +36,7 @@ if ($PSScriptRoot) {
 }
 
 $LocalSource = ""
-if ($ScriptDir -and (Test-Path (Join-Path $ScriptDir "skills\dontslopme"))) {
+if ($ScriptDir -and (Test-Path (Join-Path $ScriptDir "skills\dont-slop-me"))) {
     $LocalSource = $ScriptDir
 }
 
@@ -88,18 +88,18 @@ function Get-ProjectDestinations {
 }
 
 $SkillFiles = @(
-    "skills/dontslopme/SKILL.md",
-    "skills/dontslopme/references/codebase-discovery.md",
-    "skills/dontslopme/references/copy-and-code-hygiene.md",
-    "skills/dontslopme-ui/SKILL.md",
-    "skills/dontslopme-ui/references/anti-slop-checklist.md",
-    "skills/dontslopme-ui/references/ux-and-motion-spec.md"
+    "skills/dont-slop-me/SKILL.md",
+    "skills/dont-slop-me/references/codebase-discovery.md",
+    "skills/dont-slop-me/references/copy-and-code-hygiene.md",
+    "skills/dont-slop-me-ui/SKILL.md",
+    "skills/dont-slop-me-ui/references/anti-slop-checklist.md",
+    "skills/dont-slop-me-ui/references/ux-and-motion-spec.md"
 )
 
 function Install-SkillFiles {
     param([string]$TargetRoot)
 
-    Write-Host "Installing dontslopme to: $TargetRoot" -ForegroundColor Cyan
+    Write-Host "Installing dont-slop-me to: $TargetRoot" -ForegroundColor Cyan
 
     foreach ($relPath in $SkillFiles) {
         $stripped = $relPath.Substring("skills/".Length)
@@ -123,9 +123,9 @@ function Install-SkillFiles {
 function Uninstall-SkillFiles {
     param([string]$TargetRoot)
 
-    Write-Host "Uninstalling dontslopme from: $TargetRoot" -ForegroundColor Yellow
-    $p1 = Join-Path $TargetRoot "dontslopme"
-    $p2 = Join-Path $TargetRoot "dontslopme-ui"
+    Write-Host "Uninstalling dont-slop-me from: $TargetRoot" -ForegroundColor Yellow
+    $p1 = Join-Path $TargetRoot "dont-slop-me"
+    $p2 = Join-Path $TargetRoot "dont-slop-me-ui"
 
     if (Test-Path $p1) { Remove-Item -Recurse -Force $p1 }
     if (Test-Path $p2) { Remove-Item -Recurse -Force $p2 }
@@ -139,7 +139,7 @@ if ($Uninstall) {
             Uninstall-SkillFiles -TargetRoot $d
         }
     }
-    Write-Host "dontslopme uninstalled successfully." -ForegroundColor Green
+    Write-Host "dont-slop-me uninstalled successfully." -ForegroundColor Green
     exit 0
 }
 
@@ -148,6 +148,6 @@ foreach ($d in $targetDests) {
 }
 
 Write-Host ""
-Write-Host "dontslopme installed successfully in $Mode mode." -ForegroundColor Green
-Write-Host "Active skills: dontslopme, dontslopme-ui" -ForegroundColor Green
+Write-Host "dont-slop-me installed successfully in $Mode mode." -ForegroundColor Green
+Write-Host "Active skills: dont-slop-me, dont-slop-me-ui" -ForegroundColor Green
 

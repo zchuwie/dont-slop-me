@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# dontslopme zero-dependency installer for macOS, Linux, and WSL
+# dont-slop-me zero-dependency installer for macOS, Linux, and WSL
 # Supports: --global (default), --project, and --uninstall
 
 set -euo pipefail
 
 REPO_OWNER="zchuwie"
-REPO_NAME="dontslopme"
+REPO_NAME="dont-slop-me"
 REPO_BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}"
 
@@ -24,11 +24,11 @@ for arg in "$@"; do
       UNINSTALL=true
       ;;
     --help|-h)
-      echo "dontslopme installer"
+      echo "dont-slop-me installer"
       echo "Usage: ./install.sh [--global | --project | --uninstall]"
       echo "  --global    Install to user skills and detected IDE configurations (default)"
       echo "  --project   Install into current working directory"
-      echo "  --uninstall Remove installed dontslopme skills"
+      echo "  --uninstall Remove installed dont-slop-me skills"
       exit 0
       ;;
     *)
@@ -40,7 +40,7 @@ done
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || echo "")"
 LOCAL_SOURCE=""
-if [ -n "$SCRIPT_DIR" ] && [ -d "$SCRIPT_DIR/skills/dontslopme" ]; then
+if [ -n "$SCRIPT_DIR" ] && [ -d "$SCRIPT_DIR/skills/dont-slop-me" ]; then
   LOCAL_SOURCE="$SCRIPT_DIR"
 fi
 
@@ -88,17 +88,17 @@ get_project_destinations() {
 }
 
 SKILL_FILES=(
-  "skills/dontslopme/SKILL.md"
-  "skills/dontslopme/references/codebase-discovery.md"
-  "skills/dontslopme/references/copy-and-code-hygiene.md"
-  "skills/dontslopme-ui/SKILL.md"
-  "skills/dontslopme-ui/references/anti-slop-checklist.md"
-  "skills/dontslopme-ui/references/ux-and-motion-spec.md"
+  "skills/dont-slop-me/SKILL.md"
+  "skills/dont-slop-me/references/codebase-discovery.md"
+  "skills/dont-slop-me/references/copy-and-code-hygiene.md"
+  "skills/dont-slop-me-ui/SKILL.md"
+  "skills/dont-slop-me-ui/references/anti-slop-checklist.md"
+  "skills/dont-slop-me-ui/references/ux-and-motion-spec.md"
 )
 
 install_to_dir() {
   local target_root="$1"
-  echo "Installing dontslopme to: $target_root"
+  echo "Installing dont-slop-me to: $target_root"
 
   for rel_path in "${SKILL_FILES[@]}"; do
     local stripped="${rel_path#skills/}"
@@ -118,9 +118,9 @@ install_to_dir() {
 
 uninstall_from_dir() {
   local target_root="$1"
-  echo "Uninstalling dontslopme from: $target_root"
-  rm -rf "$target_root/dontslopme"
-  rm -rf "$target_root/dontslopme-ui"
+  echo "Uninstalling dont-slop-me from: $target_root"
+  rm -rf "$target_root/dont-slop-me"
+  rm -rf "$target_root/dont-slop-me-ui"
 }
 
 if [ "$UNINSTALL" = true ]; then
@@ -134,7 +134,7 @@ if [ "$UNINSTALL" = true ]; then
       uninstall_from_dir "$d"
     fi
   done
-  echo "dontslopme uninstalled successfully."
+  echo "dont-slop-me uninstalled successfully."
   exit 0
 fi
 
@@ -149,6 +149,6 @@ for d in "${DESTS[@]}"; do
 done
 
 echo ""
-echo "dontslopme installed successfully in $MODE mode."
-echo "Active skills: dontslopme, dontslopme-ui"
+echo "dont-slop-me installed successfully in $MODE mode."
+echo "Active skills: dont-slop-me, dont-slop-me-ui"
 

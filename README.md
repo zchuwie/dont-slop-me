@@ -1,8 +1,8 @@
-# dontslopme
+# dont-slop-me
 
 A lightweight, multi-skill anti-slop governance system for AI coding agents built on the open `agentskills.io` standard.
 
-`dontslopme` stops AI-generated slop: generic visual cliches, conversational padding, inflated hype copy, narrating comments, speculative wrappers, and context-bloating file reads.
+`dont-slop-me` stops AI-generated slop: generic visual cliches, conversational padding, inflated hype copy, narrating comments, speculative wrappers, and context-bloating file reads.
 
 ## One-Line Global Installation
 
@@ -11,19 +11,19 @@ Install globally across macOS, Linux, WSL, and Windows with a single command:
 ### Via `npx skills` (Recommended)
 
 ```bash
-npx skills add zchuwie/dontslopme --global
+npx skills add zchuwie/dont-slop-me --global
 ```
 
 ### Via Bash (`curl`) - macOS, Linux, WSL
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/zchuwie/dontslopme/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/zchuwie/dont-slop-me/main/install.sh | bash
 ```
 
 ### Via PowerShell (`irm`) - Windows
 
 ```powershell
-irm https://raw.githubusercontent.com/zchuwie/dontslopme/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/zchuwie/dont-slop-me/main/install.ps1 | iex
 ```
 
 The installer automatically detects and registers skills in:
@@ -51,19 +51,19 @@ For project-local installation or uninstallation:
 ## Repository Architecture
 
 ```text
-dontslopme/
+dont-slop-me/
 ├── LICENSE
 ├── README.md
 ├── VERSION
 ├── install.sh
 ├── install.ps1
 └── skills/
-    ├── dontslopme/
+    ├── dont-slop-me/
     │   ├── SKILL.md
     │   └── references/
     │       ├── codebase-discovery.md
     │       └── copy-and-code-hygiene.md
-    └── dontslopme-ui/
+    └── dont-slop-me-ui/
         ├── SKILL.md
         └── references/
             ├── anti-slop-checklist.md
@@ -72,7 +72,7 @@ dontslopme/
 
 ## Core Execution Discipline
 
-Every agent running `dontslopme` adheres to three execution rules:
+Every agent running `dont-slop-me` adheres to three execution rules:
 
 ### 1. Grep-First Slice Discovery (Low Input Tokens)
 
@@ -118,7 +118,7 @@ Calibrate density, typography, and motion to your product domain:
 ### 1. UI Copy
 
 - **Before (AI Slop):** *"Supercharge your team's workflow with seamless real-time collaboration."*
-- **After (dontslopme):** *"Share workspaces and edit together in real time."*
+- **After (dont-slop-me):** *"Share workspaces and edit together in real time."*
 
 ### 2. Code Comments
 
@@ -155,12 +155,12 @@ GATE: FAIL (3 issues detected)
 
 ## Versioning
 
-`dontslopme` uses minor-focused SemVer (`0.1.0`, `0.2.0`, ...) during pre-1.0 development:
+`dont-slop-me` uses minor-focused SemVer (`0.1.0`, `0.2.0`, ...) during pre-1.0 development:
 
-- **Pre-1.0 Minor Focus:** Structural iterations, rule updates, and reference additions increment the minor version (`0.1.0` -> `0.2.0`). Patch increments (`0.1.1`) are reserved for typographical or formatting fixes.
-- **Root `VERSION` file:** Contains the active version string (`0.1.0`).
-- **YAML Frontmatter:** Each `SKILL.md` specifies `version: 0.1.0`.
-- **Git Tags:** Releases are tagged as `v0.1.0`, `v0.2.0`, and so on.
+- **Pre-1.0 Minor Focus:** Structural iterations, rule updates, and reference additions increment the minor version (`0.1.0` -> `0.2.0`). Patch increments (`0.2.1`) are reserved for typographical, naming, or formatting fixes.
+- **Root `VERSION` file:** Contains the active version string (`0.2.1`).
+- **YAML Frontmatter:** Each `SKILL.md` specifies `version: 0.2.1`.
+- **Git Tags:** Releases are tagged as `v0.1.0`, `v0.2.0`, `v0.2.1`, and so on.
 
 ## License
 

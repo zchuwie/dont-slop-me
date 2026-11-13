@@ -1,11 +1,11 @@
 ---
-name: dontslopme-ui
+name: dont-slop-me-ui
 version: 0.2.1
 description: UI craft and motion skill for AI coding agents. Enforces design restraint, purposeful color palettes, tactile spring physics, accessible contrast, and native platform components over generic AI slop.
 license: MIT
 ---
 
-# dontslopme-ui
+# dont-slop-me-ui
 
 Visual craft, component discipline, and tactile motion skill for AI coding agents.
 
