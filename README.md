@@ -91,7 +91,7 @@ Save tokens and time by stripping conversational fluff:
 Clone or link the repository into your global or project agent skills folder:
 
 ```bash
-git clone https://github.com/your-org/dontslopme.git
+git clone https://github.com/zchuwie/dontslopme.git
 ```
 
 ### Setup for Cursor
