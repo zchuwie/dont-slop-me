@@ -22,6 +22,7 @@ Most AI skill definitions suffer from context bloat: large monolithic prompt fil
 dontslopme/
 ├── LICENSE
 ├── README.md
+├── VERSION
 └── skills/
     ├── dontslopme/
     │   ├── SKILL.md
@@ -143,6 +144,14 @@ This repository conforms strictly to the `agentskills.io` open standard:
 - Skill descriptions use third-person phrasing and stay well below 1024 characters.
 - Skill instruction files remain below 115 lines for optimal token economics.
 - All deep reference material is organized into `references/` subdirectories for just-in-time retrieval.
+
+## Versioning
+
+`dontslopme` uses major-only version numbers (`1`, `2`, ...) during its initial development:
+
+- **Root `VERSION` file:** Contains the active single-integer major version (`1`).
+- **YAML Frontmatter:** Each `SKILL.md` specifies its major version (`version: 1`).
+- **Git Tags:** Releases are tagged as `v1`, `v2`, and so on.
 
 ## License
 
