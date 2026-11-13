@@ -115,3 +115,4 @@ src/services/auth.ts:14 - [echo-comment] - `// initialize token` echoes assignme
 src/components/Hero.tsx:32 - [slop-copy] - "Unlock seamless workflows" -> replace with "Run builds in seconds"
 src/utils/math.ts:50 - [dead-code] - Commented out legacy fallback -> remove lines 50-58
 ```
+

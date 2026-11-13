@@ -49,12 +49,12 @@ Detect type escape hatches that hide design flaws:
 (@ts-ignore|@ts-nocheck|any\b|as any|as unknown as)
 ```
 
-### 4. Hardcoded Palette Values
+### 4. Hardcoded Palette Values and Pure Extremes
 
-Locate ad-hoc inline hex colors bypassing design tokens:
+Locate ad-hoc inline hex colors and stark black or white extremes bypassing design tokens:
 
 ```text
-#[0-9a-fA-F]{3,8}\b|rgba?\(
+#[0-9a-fA-F]{3,8}\b|rgba?\(|#000000\b|#ffffff\b|#000\b|#fff\b
 ```
 
 ### 5. Excessive Wrapper Nesting
@@ -117,3 +117,4 @@ src/components/Card.tsx:44 - [wrapper-bloat] - Triple nested <div> around single
 src/utils/format.ts:89 - [redundant-util] - Custom padStart polyfill -> replace with String.prototype.padStart
 src/styles/theme.css:102 - [hardcoded-color] - `#7c3aed` bypasses token system -> replace with `var(--color-primary)`
 ```
+

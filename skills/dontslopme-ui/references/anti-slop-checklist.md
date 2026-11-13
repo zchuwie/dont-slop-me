@@ -14,7 +14,13 @@ Each entry follows the tri-part evaluation pattern:
 
 - **Tell:** Hero sections or background canvases flooded with deep indigo-to-violet or cyan-to-purple diagonal linear gradients.
 - **Why:** This is the most common default color treatment in AI image and code training data. It flags an interface as generic template output lacking brand identity.
-- **Fix:** Extract colors from the project design tokens or brand specifications. Use solid background tones (`#0f172a`, `#ffffff`) and introduce color through purposeful content highlights or border accents.
+- **Fix:** Extract colors from the project design tokens or brand specifications. Use grounded neutral background tones (`#0f172a`, `#f8fafc`) and introduce color through purposeful content highlights or border accents.
+
+### Pure Black (#000000) or Pure White (#ffffff) Extremes
+
+- **Tell:** Canvases, backgrounds, card surfaces, or body text styled with stark `#000000` or `#ffffff` extremes.
+- **Why:** Absolute extremes produce harsh optical vibration and halation on modern displays, increasing eye fatigue. Natural materials and crafted interfaces always carry subtle warmth or cool undertones.
+- **Fix:** Replace pure white with warm or cool off-whites (`#f8fafc`, `#f9fafb`, `#fafafa`) for light backgrounds. Replace pure black with rich charcoals or dark slates (`#090d16`, `#0f172a`, `#121214`) for dark backgrounds. Set primary typography to dark slate (`#0f172a`, `#1e293b`) against light backgrounds, and soft off-white (`#f1f5f9`, `#f4f4f5`) against dark backgrounds.
 
 ### Excessive Glassmorphism
 
@@ -101,3 +107,4 @@ Each entry follows the tri-part evaluation pattern:
 - **Tell:** Interactive icons or text links with hitboxes smaller than 24x24 pixels, packed closely together.
 - **Why:** Prevents reliable fingertip activation on touch devices, causing rage clicks and accessibility failures.
 - **Fix:** Guarantee minimum 44x44px touch targets on mobile viewports using CSS padding or minimum dimension constraints (`min-height: 44px; min-width: 44px`).
+

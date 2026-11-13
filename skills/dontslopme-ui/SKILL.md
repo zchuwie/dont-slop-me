@@ -17,6 +17,7 @@ Follow these rules whenever building, styling, or refactoring user interfaces ac
 Avoid default AI styling habits:
 
 - Never use default blue-to-purple or cyan gradients as a fallback theme.
+- Never use harsh pure black (#000000) or pure white (#ffffff); use tinted slates, off-whites, and deep charcoals.
 - Limit palettes to 2-3 core brand tones and at most 1 intentional accent.
 - Avoid diffuse glows and stacked glassmorphism (`backdrop-blur` on every container).
 - Give surfaces a grounded physical plane rather than floating soft shadows everywhere.
@@ -59,3 +60,4 @@ Report UI defects as dense, single-line bullets:
 ```text
 path/to/component.ext:line - [category] - defect description -> proposed surgical fix
 ```
+

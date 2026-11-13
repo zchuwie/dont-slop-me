@@ -209,3 +209,4 @@ Every actionable element must explicitly define five tactile states:
 3. **Active / Pressed:** Physical compression feedback (e.g. `transform: scale(0.97)` to `scale(0.98)`).
 4. **Focus-Visible:** High-contrast outline ring (minimum 2px width, minimum 2px offset). Never set `outline: none` without providing an accessible visible replacement.
 5. **Disabled:** Reduced opacity (40% to 50%) with `cursor: not-allowed` and `pointer-events: none` or disabled attribute.
+

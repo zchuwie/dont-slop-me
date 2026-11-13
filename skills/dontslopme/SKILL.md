@@ -53,3 +53,4 @@ Load deep documentation only when the current task demands it:
 - Never introduce new third-party dependencies when native language features suffice.
 - Never write speculative code for unrequested future requirements.
 - Never emit conversational filler ("Certainly!", "I have updated the file for you").
+
